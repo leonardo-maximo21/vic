@@ -1,9 +1,9 @@
 // --- 1. CONFIGURAÇÕES PADRÃO E LOCALSTORAGE ---
 const DEFAULT_CONFIG = {
     names: "Leo & Vic",
-    spotifyId: "37i9dQZF1EJvfVUZT0ntp1", // Playlist padrão
-    dateConhecemos: "Quando nos conhecemos",
-    datePedido: "O pedido de namoro",
+    spotifyId: "4NSRmQdrsFNcOeWEGjdW8Q", // Playlist padrão
+    dateConhecemos: "20 de Dezembro de 2025",
+    datePedido: "23 de Dezembro de 2025",
     letterText: `Querida Vic,
 
 Desde o momento em que nossos caminhos se cruzaram, a minha vida ganhou uma nova cor. O seu sorriso ilumina qualquer dia cinzento, o seu carisma me encanta a cada segundo e o seu companheirismo me dá a certeza de que posso enfrentar qualquer coisa se estiver ao seu lado.
@@ -24,11 +24,18 @@ function loadConfig() {
     if (saved) {
         try {
             config = { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
-            // Se o ID carregado for o padrão antigo, forçar a atualização para o novo do casal
-            if (config.spotifyId === "37i9dQZF1DX10zKzsJ2jva") {
+            // Se o ID carregado for algum dos padrões antigos, forçar a atualização para a nova playlist do casal
+            if (config.spotifyId === "37i9dQZF1DX10zKzsJ2jva" || config.spotifyId === "37i9dQZF1EJvfVUZT0ntp1") {
                 config.spotifyId = DEFAULT_CONFIG.spotifyId;
-                localStorage.setItem('valentines_day_config', JSON.stringify(config));
             }
+            // Atualizar datas padrão se ainda estivessem com os textos antigos
+            if (config.dateConhecemos === "Quando nos conhecemos") {
+                config.dateConhecemos = DEFAULT_CONFIG.dateConhecemos;
+            }
+            if (config.datePedido === "O pedido de namoro") {
+                config.datePedido = DEFAULT_CONFIG.datePedido;
+            }
+            localStorage.setItem('valentines_day_config', JSON.stringify(config));
         } catch (e) {
             console.error("Erro ao carregar configurações", e);
         }
